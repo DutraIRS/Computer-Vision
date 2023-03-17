@@ -55,6 +55,7 @@ cover/
 *.mo
 *.pot
 *.pdf
+test.py
 
 # Django stuff:
 *.log
