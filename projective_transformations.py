@@ -11,7 +11,7 @@ import cv2
 import math
 
 def main():
-    img = cv2.imread("palazzo.jpg")
+    img = cv2.imread("assets/palazzo.jpg")
     cv2.imshow("Palazzo", img/255) # imshow expects values between 0 and 1, not 0 and 255
     cv2.waitKey(0)
     
@@ -26,7 +26,7 @@ def main():
     cv2.waitKey(0)
 
     # 3)
-    goal_img = cv2.imread("goal.jpg")
+    goal_img = cv2.imread("assets/goal.jpg")
     cv2.imshow("Goal", goal_img/255)
     cv2.waitKey(0)
     
