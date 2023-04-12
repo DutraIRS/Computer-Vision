@@ -107,14 +107,13 @@ def apply_convolution(img, matrix):
 
     return new_img
 
-def gaussian_matrix(size=3, std=1, mean=0):
-    padding = (size - 1) // 2
-    base = np.linspace(-padding, padding, size) + mean # shift the base to the mean
-    gauss = np.exp(-np.square(base) / (2*np.square(std))) # gaussian equation
-    matrix = np.outer(gauss, gauss) # outer product makes v @ v.T, a square matrix
-    normalized_matrix = matrix / np.sum(matrix) # normalize the matrix
-
-    return normalized_matrix
+def gaussian_matrix(size=3, std=1, mean=(0, 0)):
+    gauss_matrix = np.zeros((size, size))
+    for i in range(size):
+        for j in range(size):
+            gauss_matrix[i, j] = (1/(2*np.pi*std**2)) * np.exp(-((i - size//2 - mean[0])**2 + (j - size//2 - mean[1])**2) / (2*std**2))
+    
+    return gauss_matrix
 
 img = cv2.imread('assets/chessboard.png')
 cv2.imshow("Original", img)
@@ -249,7 +248,7 @@ gradient_magnitude = np.sqrt(sobel_x_img**2 + sobel_y_img**2)
 cv2.imshow("Gradient magnitude", gradient_magnitude)
 cv2.waitKey(0)
 
-gaussian_blur = gaussian_matrix(5, 2)
+gaussian_blur = gaussian_matrix(5, 0.5)
 gaussian_blur_img = apply_convolution(img, gaussian_blur)
 cv2.imshow("Gaussian blur", gaussian_blur_img)
 cv2.waitKey(0)
