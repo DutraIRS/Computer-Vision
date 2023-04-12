@@ -57,14 +57,23 @@ cv2.waitKey(0)
 
 fig, axs = plt.subplots(nrows=5)
 ax0, ax1, ax2, ax3, ax4 = axs
+
 ax0.hist(img.ravel(), 256, [0, 256], color='blue', label='Original')
 ax0.legend(loc='upper center')
+ax0.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+
 ax1.hist(bright_img.ravel(), 256, [0, 256], color='red', label='Bright')
 ax1.legend(loc='upper center')
+ax1.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+
 ax2.hist(high_contrast_img.ravel(), 256, [0, 256], color='green', label='High Contrast')
 ax2.legend(loc='upper center')
+ax2.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+
 ax3.hist(img_2.ravel(), 256, [0, 256], color='yellow', label="cv2's bright")
 ax3.legend(loc='upper center')
+ax3.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+
 ax4.hist(img_3.ravel(), 256, [0, 256], color='purple', label="cv2's high contrast")
 ax4.legend(loc='upper center')
 ax4.tick_params(axis='y', labelcolor='red')
