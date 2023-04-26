@@ -14,14 +14,6 @@ data10 = data60[:data60.shape[0]//6]
 sd.play(data10, fs)
 sd.wait()
 
-datahat60 = np.fft.fft(data60)
-
-plt.plot(data60)
-plt.title('60 seconds sound spectrogram')
-plt.show()
-plt.plot(abs(datahat60))
-plt.title('60 seconds fft spectrogram')
-plt.show()
 
 datahat10 = np.fft.fft(data10)
 
@@ -83,18 +75,17 @@ sd.play(reverbed_sound, fs)
 sd.wait()
 
 #%% 4
-img = cv2.imread('assets/frutas.jpg')
+img = cv2.imread('assets/fruits.jpg')
 impb = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-cv2.imshow('Frutas', impb)
+cv2.imshow('Fruits', impb)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 imghat = np.fft.fft2(impb)
+
 aux = np.abs(imghat)
 aux = aux/aux.max()
-print(aux.shape, impb.shape)
-
 cv2.imshow('fourier', aux*255)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
@@ -138,11 +129,26 @@ def cancel_low_freqs(img, pct_to_maintain):
     return new_img/new_img.max()
 
 impb2 = cancel_high_freqs(impb, 0.1)
-cv2.imshow('Frutas', impb2)
+cv2.imshow('Fruits without high frequencies', impb2)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 impb3 = cancel_low_freqs(impb2, 0.9)
-cv2.imshow('Frutas', impb3)
+cv2.imshow('Fruits without low frequencies', impb3)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+# i had the hypothesis that the black spots were due to zones of high brightness,
+# where the high frequencies were more present, so i tried the following:
+img = cv2.imread('assets/bald.jpg')
+impb = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+cv2.imshow('Bald', impb)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+impb2 = cancel_high_freqs(impb, 0.0075)
+cv2.imshow('Bald without high frequencies', impb2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+# which proves the hypothesis
