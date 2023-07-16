@@ -6,6 +6,12 @@ import numpy as np
 import cv2
 
 #%% 1
+"""
+Read the audio file StarWars60.wav.
+a) Reduce the audio file so that it contains only 10 seconds.
+b) Plot the spectrum of the 10 seconds audio (use the absolute value of the Fourier
+coefficients to visualize the spectrum).
+"""
 data60, fs = sf.read('assets/StarWars60.wav')
 #sd.play(data60, fs)
 #sd.wait()
@@ -13,7 +19,6 @@ data60, fs = sf.read('assets/StarWars60.wav')
 data10 = data60[:data60.shape[0]//6]
 sd.play(data10, fs)
 sd.wait()
-
 
 datahat10 = np.fft.fft(data10)
 
@@ -24,6 +29,11 @@ plt.plot(abs(datahat10))
 plt.title('10 seconds fft spectrogram')
 plt.show()
 #%% 2
+"""
+Fourier Compression
+Choose a fraction p ∈ [0,1] of the frequencies present in the audio that will be preserved,
+something between 80% and 10%. Set the remaining frequencies to zero.
+"""
 def silence_high_freqs(sound, pct_to_maintain):
     sound_fft = np.fft.fft(sound)
 
@@ -39,6 +49,12 @@ data10silent = silence_high_freqs(data10, 0.1)
 sd.play(data10silent, fs)
 sd.wait()
 #%% 3 a) Echo
+"""
+Convolutions in audio signals with Fourier.
+a) What would be the filter of a convolution whose result is an echo of 0.5 seconds added
+to the original signal? Implement this filter and apply it to one of the audio files.
+Convolução em sinais de áudio com Fourier.
+"""
 sound, fs = sf.read('assets/WomanSinging.wav')
 
 # 0.5 seconds of delay
@@ -54,6 +70,11 @@ sd.wait()
 sd.play(echoed_sound, fs)
 sd.wait()
 #%% b) Reverb
+"""
+How would you make a filter that produces multiple echoes (around 10 copies) with
+differences of milliseconds between them and with decreasing amplitude? Implement
+this filter and test it with some audio file.
+"""
 sound, fs = sf.read('assets/WomanSinging.wav')
 
 num_repeats = 10
@@ -75,6 +96,13 @@ sd.play(reverbed_sound, fs)
 sd.wait()
 
 #%% 4
+"""
+Fourier Compression in Images
+Read the image file fruits.jpg. Choose a fraction p ∈ [0,1] of the frequencies present in
+the image that will be preserved. Set the remaining to zero (low-pass filter).
+What's the effect of keeping the low frequencies and discarding the high frequencies
+(high-pass filter)?
+"""
 img = cv2.imread('assets/fruits.jpg')
 impb = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
